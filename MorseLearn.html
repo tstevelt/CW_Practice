@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+
+<!--
+//     Morse Code Practice
+// 
+//     Copyright (C)  2024 Tom Stevelt
+// 
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU Affero General Public License as
+//     published by the Free Software Foundation, either version 3 of the
+//     License, or (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU Affero General Public License for more details.
+// 
+//     You should have received a copy of the GNU Affero General Public License
+//     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<html>
+<head>
+<title>CW Practice</title>
+
+<script src="MorseCommon.js"></script>
+<script src="SoundPlayer.js"></script>
+<script src="MorseLearn.js"></script>
+
+<style>
+.footer 
+{
+	font-size: smaller;
+	color: #999999;
+	text-align: center;
+}
+</style>
+
+</head>
+<body bgcolor="#ffffff" onload='PaintLearn();'> 
+
+
+<table border='0' cellpadding='3' cellspacing='0'>
+<tr>
+<td>Learn Sounds</td>
+<td><a href='MorseTX.html'>TX Practice</a></td>
+<td><a href='MorseRX.html'>RX Practice</a></td>
+</tr>
+</table>
+
+<p>
+Learn the sounds!  <a target='_blank' href='MorseCode.png'>Cheat Sheet</a><br>
+Click on the Letter or Number to hear the Morse code.<br>
+Letters are played five times at ten WPM.
+<p>
+
+<div id='Learn'>
+</div>
+
+<div class='footer'>
+<a target='_blank' href='https://www.silverhammersoftware.com?MenuIndex=0'>Copyright 2024 Tom Stevelt and Silver Hammer Software LLC</a>
+</div>
+

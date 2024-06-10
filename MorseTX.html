@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+
+<!--
+//     Morse Code Practice
+// 
+//     Copyright (C)  2024 Tom Stevelt
+// 
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU Affero General Public License as
+//     published by the Free Software Foundation, either version 3 of the
+//     License, or (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU Affero General Public License for more details.
+// 
+//     You should have received a copy of the GNU Affero General Public License
+//     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<html>
+<head>
+<title>CW Practice</title>
+
+<script src="MorseCommon.js"></script>
+<script src="MorseTX.js"></script>
+
+<style>
+.footer 
+{
+	font-size: smaller;
+	color: #999999;
+	text-align: center;
+}
+</style>
+
+</head>
+
+<body bgcolor="#ffffff" onload='LoadWords(20);'> 
+
+
+<table border='0' cellpadding='3' cellspacing='3'>
+<tr>
+<td><a href='MorseLearn.html'>Learn Sounds</a></td>
+<td>TX Practice</td>
+<td><a href='MorseRX.html'>RX Practice</a></td>
+</tr>
+</table>
+
+<h1>TX Practice</h1>
+
+<input type='button' value='Load Words' onclick='LoadWords(20);return false;'>
+&emsp;<input type='button' value='Load Codes' onclick='LoadCodes(20);return false;'>
+<div id='WordList'>
+</div>
+
+<form onsubmit="return false;">
+<table width='100%'border='0' cellspacing='0' cellpadding='0'>
+<tr>
+<td width='45%'>
+<input id='TrackPad' style="width:250px;height:250px" type="submit" value="Key" onmousedown="down();return false;" onmouseup="up();return false;">
+&emsp;<input type='button' id='buttonDone' value='Done' onclick='StopClock();return false;' disabled>
+</td>
+<td width='55%' id='stats'>
+</td>
+</tr>
+</table>
+
+</form>
+
+<p>Use Straight Key or Mouse Button to send morse code. <br>
+Press "e" key whenever you make a mistake.<br>
+Click "Done" or press "d" key when finished.
+</p>
+
+</div>
+
+<p>
+Thanks to Fabian Kurz at https://lcwo.net/ for the guts of this page.<br>
+Word list from https://7esl.com/5-letter-words/
+</p>
+
+<div class='footer'>
+<a target='_blank' href='https://www.silverhammersoftware.com?MenuIndex=0'>Copyright 2024 Tom Stevelt and Silver Hammer Software LLC</a>
+</div>
+
+
+</body>
+</html>
+

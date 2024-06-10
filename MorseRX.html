@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+
+<!--
+//     Morse Code Practice
+// 
+//     Copyright (C)  2024 Tom Stevelt
+// 
+//     This program is free software: you can redistribute it and/or modify
+//     it under the terms of the GNU Affero General Public License as
+//     published by the Free Software Foundation, either version 3 of the
+//     License, or (at your option) any later version.
+// 
+//     This program is distributed in the hope that it will be useful,
+//     but WITHOUT ANY WARRANTY; without even the implied warranty of
+//     MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+//     GNU Affero General Public License for more details.
+// 
+//     You should have received a copy of the GNU Affero General Public License
+//     along with this program.  If not, see <https://www.gnu.org/licenses/>.
+-->
+
+<html>
+<head>
+<title>CW Practice</title>
+
+<script src="MorseCommon.js"></script>
+<script src="SoundPlayer.js"></script>
+<script src="MorseRX.js"></script>
+
+<style>
+.footer 
+{
+	font-size: smaller;
+	color: #999999;
+	text-align: center;
+}
+</style>
+
+</head>
+<body bgcolor="#ffffff"> 
+
+
+<table border='0' cellpadding='3' cellspacing='0'>
+<tr>
+<td><a href='MorseLearn.html'>Learn Sounds</a></td>
+<td><a href='MorseTX.html'>TX Practice</a></td>
+<td>RX Practice</td>
+</tr>
+</table>
+
+<h1>RX Practice</h1>
+
+<table border='0' cellpadding='3' cellspacing='0'>
+<tr>
+<td>
+Speed (wpm) 
+</td>
+<td>
+<select id='SpeedWPM'>
+<option value='5'>5</option>
+<option value='6'>6</option>
+<option value='7'>7</option>
+<option value='8'>8</option>
+<option value='9'>9</option>
+<option value='10' selected>10</option>
+<option value='11'>11</option>
+<option value='12'>12</option>
+<option value='13'>13</option>
+<option value='14'>14</option>
+<option value='15'>15</option>
+<option value='16'>16</option>
+<option value='17'>17</option>
+<option value='18'>18</option>
+<option value='19'>19</option>
+<option value='20'>20</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>
+Farnsworth multiplier
+</td>
+<td>
+<select id='Farnsworth'>
+<option value='1'>1x</option>
+<option value='2'>2x</option>
+<option value='3'>3x</option>
+<option value='4'>4x</option>
+<option value='5'>5x</option>
+<option value='6'>6x</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>
+Contents
+</td>
+<td>
+<select id='Contents'>
+<option value='W'>Words</option>
+<option value='R'>Letters</option>
+<option value='N'>Letters + Numbers</option>
+<option value='A'>Everything</option>
+<option value='2'>Koch 1 K,M</option>
+<option value='3'>Koch 2 U</option>
+<option value='4'>Koch 3 R</option>
+<option value='5'>Koch 4 E</option>
+<option value='6'>Koch 5 S</option>
+<option value='7'>Koch 6 N</option>
+<option value='8'>Koch 7 A</option>
+<option value='9'>Koch 8 P</option>
+<option value='10'>Koch 9 T</option>
+<option value='11'>Koch 10 L</option>
+<option value='12'>Koch 11 W</option>
+<option value='13'>Koch 12 I</option>
+<option value='14'>Koch 13 .</option>
+<option value='15'>Koch 14 J</option>
+<option value='16'>Koch 15 Z</option>
+<option value='17'>Koch 16 =</option>
+<option value='18'>Koch 17 F</option>
+<option value='19'>Koch 18 O</option>
+<option value='20'>Koch 19 Y</option>
+<option value='21'>Koch 20 ,</option>
+<option value='22'>Koch 21 V</option>
+<option value='23'>Koch 22 G</option>
+<option value='24'>Koch 23 5</option>
+<option value='25'>Koch 24 /</option>
+<option value='26'>Koch 25 Q</option>
+<option value='27'>Koch 26 9</option>
+<option value='28'>Koch 27 2</option>
+<option value='29'>Koch 28 H</option>
+<option value='30'>Koch 29 3</option>
+<option value='31'>Koch 30 8</option>
+<option value='32'>Koch 31 B</option>
+<option value='33'>Koch 32 1</option>
+<option value='34'>Koch 33 C</option>
+<option value='35'>Koch 34 ?</option>
+<option value='36'>Koch 35 4</option>
+<option value='37'>Koch 36 7</option>
+<option value='38'>Koch 37 D</option>
+<option value='39'>Koch 38 6</option>
+<option value='40'>Koch 39 0</option>
+<option value='41'>Koch 40 X</option>
+</select>
+</td>
+</tr>
+
+<tr>
+<td>
+Word count
+</td>
+<td>
+<input type='search' id='WordCount' size='4' value='3'>
+</td>
+</tr>
+
+<tr>
+<td>&nbsp;</td>
+<td>
+<input type='button' value='Go' onclick='startRX();'>
+</td>
+</tr>
+</table>
+
+<p>
+<input type='search'  id='UserInput' size='80'><br>
+<input type='button' value='Check' onclick='checkRX();'>
+
+<p>
+<div id='resultsRX'>
+</div>
+<p>
+
+<div class='footer'>
+<a target='_blank' href='https://www.silverhammersoftware.com?MenuIndex=0'>Copyright 2024 Tom Stevelt and Silver Hammer Software LLC</a>
+</div>
+

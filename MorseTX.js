@@ -289,3 +289,138 @@ function LoadCodes ( HowMany )
 
 	document.getElementById('TrackPad').focus();
 }
+
+var lengths_okay = 0;
+
+function FindLetter ()
+{
+	var	 rv = 0;
+
+	while ( 1 )
+	{
+		rv = ((CodeBook.length - 1) * SineRandom() ).toFixed(0);
+		Character = CodeBook[rv][0];
+		if ( Character >= 'A' && Character <= 'Z' )
+		{
+			break;
+		}
+	}
+	return ( rv );
+}
+
+function FindNumber ()
+{
+	var	 rv = 0;
+
+	while ( 1 )
+	{
+		rv = ((CodeBook.length - 1) * SineRandom() ).toFixed(0);
+		Character = CodeBook[rv][0];
+		if ( Character >= '0' && Character <= '9' )
+		{
+			break;
+		}
+	}
+	return ( rv );
+}
+
+function FindPunct ()
+{
+	var	 rv = 0;
+
+	while ( 1 )
+	{
+		rv = ((CodeBook.length - 1) * SineRandom() ).toFixed(0);
+		Character = CodeBook[rv][0];
+		if ( Character >= 'A' && Character <= 'Z' )
+		{
+			continue;
+		}
+		if ( Character >= '0' && Character <= '9' )
+		{
+			continue;
+		}
+		break;
+	}
+	return ( rv );
+}
+
+function LoadSentence ()
+{
+	if ( lengths_okay == 0 )
+	{
+		for ( var ndx = 0; ndx < CodeBook.length; ndx++ )
+		{
+			var len = 0;
+			for ( var xp = 0; xp < CodeBook[ndx][1].length; xp++ )
+			{
+				if ( CodeBook[ndx][1][xp] == '.' )
+				{
+					len += 1;
+				}
+				else if ( CodeBook[ndx][1][xp] == '-' )
+				{
+					len += 3;
+				}
+				else
+				{
+					console.log ( 'systax error' );
+					return;
+				}
+				if ( xp + 1 <  CodeBook[ndx][1].length )
+				{
+					len += 1;
+				}
+			}
+			CodeBook[ndx][2] = len;
+			// console.log ( CodeBook[ndx][0] + ' ' + CodeBook[ndx][1] + ' ' + CodeBook[ndx][2] );
+		}
+		
+		lengths_okay = 1;
+	}
+	
+	var Sentence = '';
+	var probNumber = 0.1;
+	var probPunct = 0.05;
+	var TotalDots = 0;
+	var flip;
+	var CodeIndex;
+	var Character;
+	var CharType;
+	var CharCount = (10.0 * SineRandom ()).toFixed(0);
+
+	while ( TotalDots < 1000 )
+	{
+		flip = SineRandom();	
+		// console.log ( flip );
+		if ( flip < probPunct )
+		{
+			CodeIndex = FindPunct ();
+		}
+		else if ( flip < probNumber )
+		{
+			CodeIndex = FindNumber ();
+		}
+		else
+		{
+			CodeIndex = FindLetter ();
+		}
+
+		Sentence += CodeBook[CodeIndex][0];
+		TotalDots += CodeBook[CodeIndex][2] + 1;
+
+		CharCount--;
+		if ( CharCount <= 0 )
+		{
+			CharCount = (10.0 * SineRandom ()).toFixed(0);
+			Sentence += ' ';
+			TotalDots += 7;
+		}
+	}
+
+	// console.log ( Sentence );
+	// console.log ( "total dots " + TotalDots );
+
+	var elemWordList = document.getElementById("WordList");
+	elemWordList.innerHTML = '<p>' + Sentence + '<p>';
+}

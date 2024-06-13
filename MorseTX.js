@@ -246,6 +246,9 @@ function LoadWords ( HowMany )
 	}
 
 	document.getElementById('TrackPad').focus();
+
+	elem1 = document.getElementById ( 'FiveLetterWords' );
+	elem1.checked = true;
 }
 
 function LoadCodes ( HowMany )
@@ -345,37 +348,91 @@ function FindPunct ()
 	return ( rv );
 }
 
+function SetCodeBookLengths ()
+{
+	for ( var ndx = 0; ndx < CodeBook.length; ndx++ )
+	{
+		var len = 0;
+		for ( var xp = 0; xp < CodeBook[ndx][1].length; xp++ )
+		{
+			if ( CodeBook[ndx][1][xp] == '.' )
+			{
+				len += 1;
+			}
+			else if ( CodeBook[ndx][1][xp] == '-' )
+			{
+				len += 3;
+			}
+			else
+			{
+				console.log ( 'systax error' );
+				return;
+			}
+			if ( xp + 1 <  CodeBook[ndx][1].length )
+			{
+				len += 1;
+			}
+		}
+		CodeBook[ndx][2] = len;
+		// console.log ( CodeBook[ndx][0] + ' ' + CodeBook[ndx][1] + ' ' + CodeBook[ndx][2] );
+	}
+}	
+
+function LoadVariable ()
+{
+	if ( lengths_okay == 0 )
+	{
+		SetCodeBookLengths ();
+		lengths_okay = 1;
+	}
+	
+	var Sentence = "";
+	var TotalDots = 0;
+	var ThisDots = 0;
+	var WordIndex = 0;
+
+	while ( TotalDots < 1000 )
+	{
+		WordIndex = ((Variable.length - 1) * SineRandom ()).toFixed(0);
+
+		if ( TotalDots > 0 )
+		{
+			Sentence += ' ';
+			ThisDots = 7;
+		}
+		else
+		{
+			ThisDots = 0;
+		}
+
+		Sentence += Variable[WordIndex][0];
+
+		for ( var xl = 0; xl < Variable[WordIndex][0].length; xl++ )
+		{
+			for ( var ndx = 0; ndx < CodeBook.length; ndx++ )
+			{
+				if ( CodeBook[ndx][0].toLowerCase() == Variable[WordIndex][0][xl].toLowerCase() )
+				{
+					ThisDots += CodeBook[ndx][2];
+					break;
+				}
+			}
+		}
+
+		TotalDots += ThisDots;
+
+		console.log ( Variable[WordIndex][0] + ' ' + ThisDots + ' ' + TotalDots );
+	}
+
+	var elemWordList = document.getElementById("WordList");
+	elemWordList.innerHTML = '<p>' + Sentence + '<p>';
+}
+
 function LoadSentence ()
 {
 	if ( lengths_okay == 0 )
 	{
-		for ( var ndx = 0; ndx < CodeBook.length; ndx++ )
-		{
-			var len = 0;
-			for ( var xp = 0; xp < CodeBook[ndx][1].length; xp++ )
-			{
-				if ( CodeBook[ndx][1][xp] == '.' )
-				{
-					len += 1;
-				}
-				else if ( CodeBook[ndx][1][xp] == '-' )
-				{
-					len += 3;
-				}
-				else
-				{
-					console.log ( 'systax error' );
-					return;
-				}
-				if ( xp + 1 <  CodeBook[ndx][1].length )
-				{
-					len += 1;
-				}
-			}
-			CodeBook[ndx][2] = len;
-			// console.log ( CodeBook[ndx][0] + ' ' + CodeBook[ndx][1] + ' ' + CodeBook[ndx][2] );
-		}
-		
+		SetCodeBookLengths ();
 		lengths_okay = 1;
 	}
 	
@@ -415,12 +472,51 @@ function LoadSentence ()
 			CharCount = (10.0 * SineRandom ()).toFixed(0);
 			Sentence += ' ';
 			TotalDots += 7;
+
+			console.log ( 'running dots ' + TotalDots );
 		}
+
 	}
 
 	// console.log ( Sentence );
-	// console.log ( "total dots " + TotalDots );
+	console.log ( "total dots " + TotalDots );
 
 	var elemWordList = document.getElementById("WordList");
 	elemWordList.innerHTML = '<p>' + Sentence + '<p>';
+}
+
+function LoadSomething ( )
+{
+	var elem1;
+	var elem2;
+	var elem3;
+	var elem4;
+	var HowMany = 20;
+
+	elem1 = document.getElementById ( 'FiveLetterWords' );
+	elem2 = document.getElementById ( 'FiveLetterCodes');
+	elem3 = document.getElementById ( 'CommonWordSentence' );
+	elem4 = document.getElementById ( 'CodedSentence' );
+
+	if ( elem1.checked )
+	{
+		LoadWords ( HowMany );
+	}
+	else if ( elem2.checked )
+	{
+		LoadCodes ( HowMany );
+	}
+	else if ( elem3.checked )
+	{
+		LoadVariable ();
+	}
+	else if ( elem4.checked )
+	{
+		LoadSentence ();
+	}
+	else
+	{
+		var elemWordList = document.getElementById("WordList");
+		elemWordList.innerHTML = '<p>Please select something above and try again!<p>';
+	}
 }

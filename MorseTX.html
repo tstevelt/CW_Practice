@@ -50,17 +50,44 @@
 
 <h1>TX Practice</h1>
 
-<input type='button' value='Load Words' onclick='LoadWords(20);return false;'>
-&emsp;<input type='button' value='Load Codes' onclick='LoadCodes(20);return false;'>
-&emsp;<input type='button' value='Load "Sentence"' onclick='LoadSentence();return false;'>
+<!--c{
+<input type='button' value='Five Letter Words'           onclick='LoadWords(20);return false;'>
+&emsp;<input type='button' value='Five Letter Codes'     onclick='LoadCodes(20);return false;'>
+&emsp;<input type='button' value='Common Words Sentence' onclick='LoadVariable();return false;'>
+&emsp;<input type='button' value='Coded "Sentence"'      onclick='LoadSentence();return false;'>
+}-->
+
+
+<table border='0' cellpadding='3' cellspacing='3'>
+<tr>
+<td>
+<input type='radio' id='FiveLetterWords' name='LoadWhat'>
+<label for='FiveLetterWords'>Five Letter Words</label><br>
+
+<input type='radio' id='FiveLetterCodes' name='LoadWhat'>
+<label for='FiveLetterCodes'>Five Letter Codes</label><br>
+
+<input type='radio' id='CommonWordSentence' name='LoadWhat'>
+<label for='CommonWordSentence'>Common Word Sentences</label><br>
+
+<input type='radio' id='CodedSentence' name='LoadWhat'>
+<label for='CodedSentence'>CodedSentence</label><br>
+</td>
+<td valign='center'>
+<input type='button' value='Load' onclick='LoadSomething();return false;'>
+</td>
+</tr>
+</table>
+
 <div id='WordList'>
 </div>
+<p>
 
 <form onsubmit="return false;">
 <table width='100%'border='0' cellspacing='0' cellpadding='0'>
 <tr>
 <td width='45%'>
-<input id='TrackPad' style="width:250px;height:250px" type="submit" value="Key" onmousedown="down();return false;" onmouseup="up();return false;">
+<input id='TrackPad' style="width:250px;height:250px" type="submit" value="Key" onmousedown="down();return false;" onmouseup="up();return false;" ontouchstart="down();return false;" ontouchend="up();return false;" >
 &emsp;<input type='button' id='buttonDone' value='Done' onclick='StopClock();return false;' disabled>
 </td>
 <td width='55%' id='stats'>

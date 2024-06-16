@@ -223,7 +223,7 @@ function LoadWords ( HowMany )
 	// console.clear();
 
 	SineSeed = new Date().getTime();
-	console.log ( 'LoadWords: SineSeed ' + SineSeed );
+	// console.log ( 'LoadWords: SineSeed ' + SineSeed );
 	for ( var ndx = 0; ndx < Words.length; ndx++ )
 	{
 		Words[ndx][1] = SineRandom();
@@ -368,11 +368,10 @@ function SetCodeBookLengths ()
 				console.log ( 'systax error' );
 				return;
 			}
-			if ( xp + 1 <  CodeBook[ndx][1].length )
-			{
-				len += 1;
-			}
+
+			len += 1;
 		}
+		len += 2;
 		CodeBook[ndx][2] = len;
 		// console.log ( CodeBook[ndx][0] + ' ' + CodeBook[ndx][1] + ' ' + CodeBook[ndx][2] );
 	}
@@ -395,17 +394,7 @@ function LoadVariable ()
 	{
 		WordIndex = ((Variable.length - 1) * SineRandom ()).toFixed(0);
 
-		if ( TotalDots > 0 )
-		{
-			Sentence += ' ';
-			ThisDots = 7;
-		}
-		else
-		{
-			ThisDots = 0;
-		}
-
-		Sentence += Variable[WordIndex][0];
+		ThisDots = 0;
 
 		for ( var xl = 0; xl < Variable[WordIndex][0].length; xl++ )
 		{
@@ -413,16 +402,27 @@ function LoadVariable ()
 			{
 				if ( CodeBook[ndx][0].toLowerCase() == Variable[WordIndex][0][xl].toLowerCase() )
 				{
+					Sentence += Variable[WordIndex][0][xl];
 					ThisDots += CodeBook[ndx][2];
 					break;
 				}
 			}
+
+			if ( TotalDots + ThisDots > 1000 )
+			{
+				break;
+			}
 		}
+
+		ThisDots += 4;
+		Sentence += ' ';
 
 		TotalDots += ThisDots;
 
-		console.log ( Variable[WordIndex][0] + ' ' + ThisDots + ' ' + TotalDots );
+		// console.log ( Variable[WordIndex][0] + ' ' + ThisDots + ' ' + TotalDots );
 	}
+
+	// console.log ( "total dots " + TotalDots );
 
 	var elemWordList = document.getElementById("WordList");
 	elemWordList.innerHTML = '<p>' + Sentence + '<p>';
@@ -464,22 +464,25 @@ function LoadSentence ()
 		}
 
 		Sentence += CodeBook[CodeIndex][0];
-		TotalDots += CodeBook[CodeIndex][2] + 1;
+		TotalDots += CodeBook[CodeIndex][2];
 
 		CharCount--;
 		if ( CharCount <= 0 )
 		{
-			CharCount = (10.0 * SineRandom ()).toFixed(0);
 			Sentence += ' ';
-			TotalDots += 7;
+			TotalDots += 4;
 
-			console.log ( 'running dots ' + TotalDots );
+			// console.log ( 'running dots ' + TotalDots );
+
+			CharCount = (10.0 * SineRandom ()).toFixed(0);
 		}
-
 	}
 
+	TotalDots += 4;
+	// console.log ( 'final dots ' + TotalDots );
+
 	// console.log ( Sentence );
-	console.log ( "total dots " + TotalDots );
+	// console.log ( "total dots " + TotalDots );
 
 	var elemWordList = document.getElementById("WordList");
 	elemWordList.innerHTML = '<p>' + Sentence + '<p>';

@@ -100,6 +100,24 @@ var CodeBook = [
   [ 'Z','--..', 0 ]
 ];
 
+var Prosigns = [
+ [ 'AR', '.-.-.', 'End of transmission' ],
+ [ 'AS', '.-...', 'Wait' ],
+ [ 'BK', '-...-.-', 'Invite receiving station to transmit' ],
+ [ 'BT', '-...-', 'Pause or Break for text' ],
+ [ 'CL', '-.-..-..', 'Going off the air' ],
+ [ 'CQ', '-.-.--.-', 'Calling any amateur radio station' ],
+ [ 'K', '-.-', 'Invite any station to transmit' ],
+ [ 'KA', '-.-.-', 'Beginning of message' ],
+ [ 'KN', '-.--.', 'Invite a specific station to transmit' ],
+ [ 'R', '.-.', 'All received or OK' ],
+ [ 'SK', '...-.-', 'End of contact' ],
+ [ 'SOS', '...---...', 'Save Our Ship' ],
+ [ 'VE', '...-.', 'Understood' ],
+];
+
+var ProsignCount = Prosigns.length;
+
 var Words = [
  [ 'aargh', 0 ],
  [ 'aback', 0 ],
@@ -1500,6 +1518,7 @@ var Variable = [
 ];
 
 var WordCount = Words.length;
+
 
 function cmprec(a,b)
 {

@@ -490,16 +490,12 @@ function LoadSentence ()
 
 function LoadSomething ( )
 {
-	var elem1;
-	var elem2;
-	var elem3;
-	var elem4;
 	var HowMany = 20;
 
-	elem1 = document.getElementById ( 'FiveLetterWords' );
-	elem2 = document.getElementById ( 'FiveLetterCodes');
-	elem3 = document.getElementById ( 'CommonWordSentence' );
-	elem4 = document.getElementById ( 'CodedSentence' );
+	var elem1 = document.getElementById ( 'FiveLetterWords' );
+	var elem2 = document.getElementById ( 'FiveLetterCodes');
+	var elem3 = document.getElementById ( 'CommonWordSentence' );
+	var elem4 = document.getElementById ( 'CodedSentence' );
 
 	if ( elem1.checked )
 	{

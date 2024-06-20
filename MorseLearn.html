@@ -37,7 +37,11 @@
 </style>
 
 </head>
+<!--c{
+<body bgcolor="#ffffff">
 <body bgcolor="#ffffff" onload='PaintLearn();'> 
+}-->
+<body bgcolor="#ffffff" onload='LearnSomething();'> 
 
 
 <table border='0' cellpadding='3' cellspacing='0'>
@@ -48,15 +52,37 @@
 </tr>
 </table>
 
-<p>
-Learn the sounds!  <a target='_blank' href='MorseCode.png'>Cheat Sheet</a><br>
-Click on the Letter or Number to hear the Morse code.<br>
-Letters are played five times at ten WPM.
-<p>
+<!--c{
+<a target='_blank' href='MorseCode.png'>Cheat Sheet</a>
+}-->
+<table border='0' cellpadding='3' cellspacing='3'>
+<tr>
+<td>
+<input type='radio' id='CheatSheet' name='LearnWhat'>
+<label for='CheatSheet'>Cheat Sheet</label><br>
+
+<input type='radio' id='LearnLetters' name='LearnWhat' checked>
+<label for='LearnLetters'>Letters</label><br>
+
+<input type='radio' id='LearnNumbers' name='LearnWhat'>
+<label for='LearnNumbers'>Numbers</label><br>
+
+<input type='radio' id='LearnPucntuation' name='LearnWhat'>
+<label for='LearnPucntuation'>Pucntuation</label><br>
+
+<input type='radio' id='LearnProsigns' name='LearnWhat'>
+<label for='LearnProsigns'>Prosigns</label><br>
+
+</td>
+<td valign='center'>
+<input type='button' value='Learn' onclick='LearnSomething();return false;'>
+</td>
+</tr>
+</table>
 
 <div id='Learn'>
 </div>
-
+<p>
 <div class='footer'>
 <a target='_blank' href='https://www.silverhammersoftware.com?MenuIndex=0'>Copyright 2024 Tom Stevelt and Silver Hammer Software LLC</a>
 </div>

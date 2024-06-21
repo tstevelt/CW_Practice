@@ -37,12 +37,9 @@
 </style>
 
 </head>
-<!--c{
-<body bgcolor="#ffffff">
-<body bgcolor="#ffffff" onload='PaintLearn();'> 
-}-->
-<body bgcolor="#ffffff" onload='LearnSomething();'> 
 
+<body bgcolor="#ffffff" onload='LearnSomething();'> 
+<form onsubmit="return false;">
 
 <table border='0' cellpadding='3' cellspacing='0'>
 <tr>
@@ -73,6 +70,9 @@
 <input type='radio' id='LearnProsigns' name='LearnWhat'>
 <label for='LearnProsigns'>Prosigns</label><br>
 
+<input type='radio' id='LearnAbbreviations' name='LearnWhat'>
+<label for='LearnAbbreviations'>Abbreviations</label><br>
+
 </td>
 <td valign='center'>
 <input type='button' value='Learn' onclick='LearnSomething();return false;'>
@@ -87,3 +87,6 @@
 <a target='_blank' href='https://www.silverhammersoftware.com?MenuIndex=0'>Copyright 2024 Tom Stevelt and Silver Hammer Software LLC</a>
 </div>
 
+</form>
+</body>
+</html>

@@ -155,6 +155,7 @@ function down () {
 	if (!audio_started) {
 		init_audio();
 	}
+	audioCtx.resume();
 	gainNode.gain.value = 0.1;
 
 	if ( StartTime == 0 )
@@ -166,6 +167,7 @@ function down () {
 }
 
 function up () {
+	audioCtx.resume();
 	gainNode.gain.value = 0.0;
 	var Interval = new Date().getTime() - DownTime;
 	DotDashArray.push(Interval);
@@ -193,11 +195,11 @@ function init_audio () {
     biquadFilter = audioCtx.createBiquadFilter();
     gainNode = audioCtx.createGain();
     biquadFilter.type = "lowpass";
-    biquadFilter.frequency.setValueAtTime(600, audioCtx.currentTime);
+    biquadFilter.frequency.setValueAtTime(frequency, audioCtx.currentTime);
     biquadFilter.Q.setValueAtTime(15, audioCtx.currentTime);
 
     oscillator.type = 'sine';
-    oscillator.frequency.setValueAtTime(600, audioCtx.currentTime); // value in hertz
+    oscillator.frequency.setValueAtTime(frequency, audioCtx.currentTime); // value in hertz
 
     oscillator.connect(gainNode);
     gainNode.connect(biquadFilter);
@@ -206,6 +208,8 @@ function init_audio () {
     oscillator.start();
 
     gainNode.gain.value = 0;
+
+	audioCtx.resume();
     audio_started = true;
 }
 

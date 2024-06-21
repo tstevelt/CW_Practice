@@ -20,10 +20,19 @@ function cmpcode ( a,b )
 	return  a[0] - b[0];
 }
 
-function LearnThis ( Cell )
+function LearnThis ( Cell, HowMany )
 {
 	var L = Cell.innerHTML;
-	var ThisWord = L + L + L + L + L;
+	var ThisWord;
+	if ( HowMany == 5 )
+	{
+		ThisWord = L + L + L + L + L;
+	}
+	else
+	{
+		ThisWord = L;
+	}
+
 	// console.log ( ThisWord );
 
 	const AudioContext = window.AudioContext || window.webkitAudioContext;
@@ -89,67 +98,6 @@ function LearnProsign ( Cell )
 	}
 }
 
-function PaintLearn ()
-{
-	var	elemLearn = document.getElementById('Learn');
-	var myString = "<table border='1' cellpadding='3' cellspacing='0'>";
-	var ndx;
-
-	CodeBook.sort(cmpcode);
-
-	// letters
-	for ( ndx = 0; ndx < CodeBook.length; ndx += 2 )
-	{
-		if ( CodeBook[ndx][0] >= 'A' &&  CodeBook[ndx][0] <= 'Z' )
-		{
-			myString += '<tr>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
-			myString += '</tr>';
-		}
-	}
-	
-	// numbers
-	for ( ndx = 0; ndx < CodeBook.length; ndx++ )
-	{
-		if ( CodeBook[ndx][0] == '0' )
-		{
-			break;
-		}
-	}
-	for ( ; ndx < CodeBook.length; ndx += 2 )
-	{
-		if ( CodeBook[ndx][0] >= '0' &&  CodeBook[ndx][0] <= '9' )
-		{
-			myString += '<tr>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
-			myString += '</tr>';
-		}
-	}
-
-	// other
-	for ( var ndx = 0; ndx < CodeBook.length; ndx++ )
-	{
-		if ( CodeBook[ndx][0] >= 'A' &&  CodeBook[ndx][0] <= 'Z' )
-		{
-			continue;
-		}
-		if ( CodeBook[ndx][0] >= '0' &&  CodeBook[ndx][0] <= '9' )
-		{
-			continue;
-		}
-		myString += '<tr>';
-		myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
-		myString += '</tr>';
-	}
-	
-
-	myString += '</table>';
-	elemLearn.innerHTML = myString;
-}
-
-
 function CheatSheet ()
 {
 	elemLearn.innerHTML = '<img src="MorseCode.png">';
@@ -169,8 +117,8 @@ function LearnLetters ()
 		if ( CodeBook[ndx][0] >= 'A' &&  CodeBook[ndx][0] <= 'Z' )
 		{
 			myString += '<tr>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
+			myString += '<td onclick="LearnThis(this,5);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
+			myString += '<td onclick="LearnThis(this,5);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
 			myString += '</tr>';
 		}
 	}
@@ -199,8 +147,8 @@ function LearnNumbers ()
 		if ( CodeBook[ndx][0] >= '0' &&  CodeBook[ndx][0] <= '9' )
 		{
 			myString += '<tr>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
-			myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
+			myString += '<td onclick="LearnThis(this,5);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
+			myString += '<td onclick="LearnThis(this,5);">' + CodeBook[ndx+1][0] + '</td><td>' + CodeBook[ndx+1][1] + '</td>';
 			myString += '</tr>';
 		}
 	}
@@ -229,7 +177,7 @@ function LearnPunctuation ()
 			continue;
 		}
 		myString += '<tr>';
-		myString += '<td onclick="LearnThis(this);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
+		myString += '<td onclick="LearnThis(this,5);">' + CodeBook[ndx][0] + '</td><td>' + CodeBook[ndx][1] + '</td>';
 		myString += '</tr>';
 	}
 
@@ -239,7 +187,7 @@ function LearnPunctuation ()
 
 function LearnProsigns ()
 {
-	var myString = '<p>Click on the Prosign hear the morse code.<br>';
+	var myString = '<p>Click on the Prosign to hear the morse code.<br>';
 	myString += "More information about Prosigns, Common Abbreviations and Wire Signs at ";
 	myString += "<a target='_blank' href='https://the-daily-dabble.com/morse-code-abbreviations'>The Daily Dabble</a> and ";
 	myString += "<a target='_blank' href='https://en.wikipedia.org/wiki/Prosigns_for_Morse_code'>Wikipedia</a><br>";
@@ -252,9 +200,25 @@ function LearnProsigns ()
 	for ( var ndx = 0; ndx < Prosigns.length; ndx++ )
 	{
 		myString += '<tr>';
-		// myString += '<td onclick="LearnThis(this);">' + Prosigns[ndx][0] + '</td><td>' + Prosigns[ndx][1] + '</td><td>' + Prosigns[ndx][2] + '</td>';
-		// myString += '<td>' + Prosigns[ndx][0] + '</td><td onclick="LearnProsign(this);">' + Prosigns[ndx][1] + '</td><td>' + Prosigns[ndx][2] + '</td>';
 		myString += '<td onclick="LearnProsign(this);">' + Prosigns[ndx][0] + '</td><td>' + Prosigns[ndx][1] + '</td><td>' + Prosigns[ndx][2] + '</td>';
+		myString += '</tr>';
+	}
+
+	myString += '</table>';
+	elemLearn.innerHTML = myString;
+}
+
+function LearnAbbreviations ()
+{
+	var myString  = '<p>Click on the abbreviation to hear the morse code.<br>';
+	myString += 'Notice that abbreviations as individual letters.';
+	myString += "<p><table border='1' cellpadding='3' cellspacing='0'>";
+
+	for ( var ndx = 0; ndx < AbbreviationCount; ndx++ )
+	{
+		myString += '<tr>';
+
+		myString += '<td onclick="LearnThis(this,1);">' + Abbreviations[ndx][0] + '</td><td>' + Abbreviations[ndx][1] + '</td>';
 		myString += '</tr>';
 	}
 
@@ -273,6 +237,7 @@ function LearnSomething ()
 	var elem3 = document.getElementById ( 'LearnNumbers' );
 	var elem4 = document.getElementById ( 'LearnPucntuation' );
 	var elem5 = document.getElementById ( 'LearnProsigns' );
+	var elem6 = document.getElementById ( 'LearnAbbreviations' );
 
 	if ( elem1.checked )
 	{
@@ -293,6 +258,10 @@ function LearnSomething ()
 	else if ( elem5.checked )
 	{
 		LearnProsigns ();
+	}
+	else if ( elem6.checked )
+	{
+		LearnAbbreviations ();
 	}
 	else 
 	{

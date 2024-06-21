@@ -21,17 +21,9 @@ var DashMS = 3 * DotMS;
 var InterMS = 3 * DotMS;
 var IntraMS = DotMS;
 var WordMS = 7 * DotMS;
-
 var SineSeed = 0.0;
-
 var ErrorCount = 0;
 var TotalCount = 0;
-
-var Letters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ',', '/', '?', '@' ];
-
-var Koch = [ 'k', 'm', 'u', 'r', 'e', 's', 'n', 'a', 'p', 't', 'l', 'w', 'i', '.', 'j', 'z', '=', 'f', 'o', 'y', ',', 'v', 'g', '5', '/', 'q', '9', '2', 'h', '3', '8', 'b', '1', 'c', '?', '4', '7',  'd', '6', '0', 'x' ];
-
-
 var audio;
 var audioCtx;
 var oscillator;
@@ -40,6 +32,57 @@ var gainNode;
 var type = 'sine';
 var frequency = 440;
 var when = 1.0;
+
+function cmprec(a,b)
+{
+	return parseFloat(a[1]) - parseFloat(b[1]);
+}
+
+// found logic on https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
+// my idea to seed with time.
+function SineRandom() 
+{
+    var x = Math.sin(SineSeed++) * 100.0;
+    return x - Math.floor(x);
+}
+
+function SendWord ( Word )
+{
+	Word = Word.toUpperCase();
+	for ( var ndx = 0; ndx < Word.length; ndx++ )
+	{
+		Letter = Word[ndx];
+		for ( var xc = 0; xc < CodeBook.length; xc++ )
+		{
+			if ( CodeBook[xc][0] != Letter )
+			{
+				continue;
+			}
+
+			for ( var xs = 0; xs < CodeBook[xc][1].length; xs++ )
+			{
+				if ( CodeBook[xc][1][xs] == '.' )
+				{
+					(new SoundPlayer(audio)).play(frequency, 1.0, type, when).stop(when+DotMS/1000.0);
+					when += (DotMS+IntraMS)/1000.0;
+				}
+				else
+				{
+					(new SoundPlayer(audio)).play(frequency, 1.0, type, when).stop(when+DashMS/1000.0);
+					when += (DashMS+IntraMS)/1000.0;
+				}
+			}
+
+			break;
+		}
+		when += (Farnsworth * InterMS/1000.0);
+	}
+	when += WordMS/1000.0;
+}
+
+var Letters = [ 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z', '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', '.', ',', '/', '?', '@' ];
+
+var Koch = [ 'k', 'm', 'u', 'r', 'e', 's', 'n', 'a', 'p', 't', 'l', 'w', 'i', '.', 'j', 'z', '=', 'f', 'o', 'y', ',', 'v', 'g', '5', '/', 'q', '9', '2', 'h', '3', '8', 'b', '1', 'c', '?', '4', '7',  'd', '6', '0', 'x' ];
 
 var CodeBook = [
 //  [ '!','-.-.--', 0 ],
@@ -1519,51 +1562,165 @@ var Variable = [
 
 var WordCount = Words.length;
 
+var Abbreviations = [
+ [ 'AA', 'After all' ],
+ [ 'AB', 'All before' ],
+ [ 'ABT', 'About' ],
+ [ 'ADEE', 'Addressee' ],
+ [ 'ADR', 'Address' ],
+ [ 'ADS', 'Address' ],
+ [ 'AGN', 'Again' ],
+ [ 'AM', 'Amplitude Modulation' ],
+ [ 'ANT', 'Antenna' ],
+ [ 'B4', 'Before' ],
+ [ 'BCI', 'Broadcast Interference' ],
+ [ 'BCL', 'Broadcast Listener' ],
+ [ 'BCNU', 'Be seeing you' ],
+ [ 'BK', 'Break or Break-in' ],
+ [ 'BN', 'All between or Been' ],
+ [ 'BT', 'Separation or add a space' ],
+ [ 'BTR', 'Better' ],
+ [ 'BUG', 'Semi-Automatic key' ],
+ [ 'C', 'Yes or Correct' ],
+ [ 'CFM', 'Confirm or  I confirm' ],
+ [ 'CK', 'Check' ],
+ [ 'CKT', 'Circuit' ],
+ [ 'CL', 'I am closing my station or Call' ],
+ [ 'CLD', 'Called' ],
+ [ 'CLG', 'Calling' ],
+ [ 'CNT', 'Cant' ],
+ [ 'CONDX', 'Conditions' ],
+ [ 'CQ', 'Calling any station' ],
+ [ 'CU', 'See you' ],
+ [ 'CUL', 'See you later' ],
+ [ 'CUM', 'Come' ],
+ [ 'CW', 'Continuous-wave' ],
+ [ 'DA  Day', 'Day' ],
+ [ 'DE', 'From or This is' ],
+ [ 'DIFF', 'Difference' ],
+ [ 'DLD', 'Delivered' ],
+ [ 'DLVD', 'Delivered' ],
+ [ 'DN', 'Down' ],
+ [ 'DR', 'Dear' ],
+ [ 'DX', 'Distance' ],
+ [ 'EL', 'Element' ],
+ [ 'ES', 'Fine business or Excellent' ],
+ [ 'FER', 'For' ],
+ [ 'FM', 'From' ],
+ [ 'GA', 'Go ahead or Good afternoon' ],
+ [ 'GB', 'Goodbye or God bless' ],
+ [ 'GD', 'Good' ],
+ [ 'GE', 'Good Evening' ],
+ [ 'GESS', 'Guess' ],
+ [ 'GG', 'Going' ],
+ [ 'GM', 'Good morning' ],
+ [ 'GN', 'Good night' ],
+ [ 'GND', 'Ground' ],
+ [ 'GUD', 'Good' ],
+ [ 'GV', 'Give' ],
+ [ 'GVG', 'Giving' ],
+ [ 'HH', 'Error in sending' ],
+ [ 'HI', 'The telegraph laugh' ],
+ [ 'HPE', 'Hope' ],
+ [ 'HQ', 'Headquarters' ],
+ [ 'HR', 'Here or Hear' ],
+ [ 'HV', 'Have' ],
+ [ 'HW', 'How or How copy?' ],
+ [ 'IMI', 'Repeat or Say again' ],
+ [ 'INFO', 'Info' ],
+ [ 'LID', 'A poor operator' ],
+ [ 'LNG', 'Long' ],
+ [ 'LTR', 'Later or letter' ],
+ [ 'LV', 'Leave' ],
+ [ 'LVG', 'Leaving' ],
+ [ 'MA', 'Milliamperes' ],
+ [ 'MILL', 'Typewriter' ],
+ [ 'MILS', 'Milliamperes' ],
+ [ 'MSG', 'Prefix to message' ],
+ [ 'N', 'No, Negative, Incorrect or No More' ],
+ [ 'NCS', 'Net Control Station' ],
+ [ 'NIL', 'Nothing or I have nothing for you' ],
+ [ 'NM', 'No more' ],
+ [ 'NR', 'Number' ],
+ [ 'NW', 'Now or I resume transmission' ],
+ [ 'OB', 'Old boy' ],
+ [ 'OC', 'Old chap' ],
+ [ 'OM', 'Old man' ],
+ [ 'OP', 'Operator' ],
+ [ 'OPR', 'Operator' ],
+ [ 'OT', 'Oldtimer or Old top' ],
+ [ 'PBL', 'Preamble' ],
+ [ 'PKG', 'Package' ],
+ [ 'PSE', 'Please' ],
+ [ 'PT', 'Point' ],
+ [ 'PWR', 'Power' ],
+ [ 'PX', 'Press' ],
+ [ 'R', 'Received as transmitted, Are or Decimal Point' ],
+ [ 'RC', 'Ragchew or informal conversation' ],
+ [ 'RCD', 'Received' ],
+ [ 'RCVR', 'Receiver' ],
+ [ 'RE', 'Concerning; Regarding' ],
+ [ 'REF', 'Refer to, Referring to or Reference' ],
+ [ 'RFI', 'Radiofrequency interference' ],
+ [ 'RIG', 'Station equipment' ],
+ [ 'RPT', 'Repeat or Report' ],
+ [ 'RST', 'Readability, strength or tone' ],
+ [ 'RTTY', 'Radio teletype' ],
+ [ 'RX', 'Receive or Receiver' ],
+ [ 'SASE', 'Self-addressed or stamped envelope' ],
+ [ 'SED', 'Said' ],
+ [ 'SEZ', 'Says' ],
+ [ 'SGD', 'Signed' ],
+ [ 'SIG', 'Signature or Signal' ],
+ [ 'SINE', 'Operators personal initials or nickname' ],
+ [ 'SKED', 'Schedule' ],
+ [ 'SRI', 'Sorry' ],
+ [ 'SS', 'Sweepstakes' ],
+ [ 'SSB', 'Single side band' ],
+ [ 'STN', 'Station' ],
+ [ 'SUM', 'Some' ],
+ [ 'SVC', 'Prefix to service message' ],
+ [ 'T', 'Zero' ],
+ [ 'T/R', 'Transmit/Receive' ],
+ [ 'TFC', 'Traffic' ],
+ [ 'TKS', 'Thanks' ],
+ [ 'TMW', 'Tomorrow' ],
+ [ 'TNX', 'Thanks' ],
+ [ 'TR', 'Transmit' ],
+ [ 'TRIX', 'Tricks' ],
+ [ 'TT', 'That' ],
+ [ 'TTS', 'That is' ],
+ [ 'TU', 'Thank you' ],
+ [ 'TVI', 'Television interference' ],
+ [ 'TX', 'Transmitter or Transmit' ],
+ [ 'TXT', 'Text' ],
+ [ 'U', 'You' ],
+ [ 'UR', 'Your or Youre' ],
+ [ 'URS', 'Yours' ],
+ [ 'VFB', 'Very fine business' ],
+ [ 'VFO', 'Variable Frequency Oscillator' ],
+ [ 'VY', 'Very' ],
+ [ 'W', 'Watts' ],
+ [ 'WA', 'Word after' ],
+ [ 'WB', 'Word before' ],
+ [ 'WD', 'Word' ],
+ [ 'WDS', 'Words' ],
+ [ 'WID', 'With' ],
+ [ 'WKD', 'Worked' ],
+ [ 'WKG', 'Working' ],
+ [ 'WL', 'Well or Will' ],
+ [ 'WPM', 'Words Per Minute' ],
+ [ 'WRD', 'Word' ],
+ [ 'WUD', 'Would' ],
+ [ 'WX', 'Weather' ],
+ [ 'XCVR', 'Transceiver' ],
+ [ 'XMTR', 'Transmitter' ],
+ [ 'XTAL', 'Crystal' ],
+ [ 'XYL', 'Wife' ],
+ [ 'YL', 'Young lady' ],
+ [ 'YR', 'Year' ],
+];
 
-function cmprec(a,b)
-{
-	return parseFloat(a[1]) - parseFloat(b[1]);
-}
+var AbbreviationCount = Abbreviations.length;
 
-// found logic on https://stackoverflow.com/questions/521295/seeding-the-random-number-generator-in-javascript
-// my idea to seed with time.
-function SineRandom() 
-{
-    var x = Math.sin(SineSeed++) * 100.0;
-    return x - Math.floor(x);
-}
-
-function SendWord ( Word )
-{
-	Word = Word.toUpperCase();
-	for ( var ndx = 0; ndx < Word.length; ndx++ )
-	{
-		Letter = Word[ndx];
-		for ( var xc = 0; xc < CodeBook.length; xc++ )
-		{
-			if ( CodeBook[xc][0] != Letter )
-			{
-				continue;
-			}
-
-			for ( var xs = 0; xs < CodeBook[xc][1].length; xs++ )
-			{
-				if ( CodeBook[xc][1][xs] == '.' )
-				{
-					(new SoundPlayer(audio)).play(frequency, 1.0, type, when).stop(when+DotMS/1000.0);
-					when += (DotMS+IntraMS)/1000.0;
-				}
-				else
-				{
-					(new SoundPlayer(audio)).play(frequency, 1.0, type, when).stop(when+DashMS/1000.0);
-					when += (DashMS+IntraMS)/1000.0;
-				}
-			}
-
-			break;
-		}
-		when += (Farnsworth * InterMS/1000.0);
-	}
-	when += WordMS/1000.0;
-}
 

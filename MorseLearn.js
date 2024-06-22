@@ -228,8 +228,15 @@ function LearnAbbreviations ()
 
 var	elemLearn;
 
+function ChangeFrequency ()
+{
+	frequency =  Number(document.getElementById('UserFreq').value);
+}
+
 function LearnSomething ()
 {
+	frequency =  Number(document.getElementById('UserFreq').value);
+
 	elemLearn = document.getElementById('Learn');
 
 	var elem1 = document.getElementById ( 'CheatSheet' );

@@ -51,6 +51,24 @@
 <h1>TX Practice</h1>
 
 <table border='0' cellpadding='3' cellspacing='3'>
+
+<!--c{
+<tr>
+<td>
+Tone (freq)
+</td>
+<td>
+<select id='UserFreq' onchange='ChangeFrequency();'>
+<option value='440'>440</option>
+<option value='500'>500</option>
+<option value='600'>600</option>
+<option value='700'>700</option>
+<option value='800'>800</option>
+</select>
+</td>
+</tr>
+}-->
+
 <tr>
 <td>
 <input type='radio' id='FiveLetterWords' name='LoadWhat'>
@@ -75,7 +93,19 @@
 </div>
 <p>
 
+
+Tone (freq)
+<select id='UserFreq' onchange='ChangeFrequency();'>
+<option value='440'>440</option>
+<option value='500'>500</option>
+<option value='600'>600</option>
+<option value='700'>700</option>
+<option value='800'>800</option>
+</select>
+<p>
+
 <table width='100%'border='0' cellspacing='0' cellpadding='0'>
+
 <tr>
 <td width='45%'>
 <input id='TrackPad' style="width:250px;height:250px" type="submit" value="Key" onmousedown="down();return false;" onmouseup="up();return false;" ontouchstart="down();return false;" ontouchend="up();return false;" >

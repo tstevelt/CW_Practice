@@ -49,10 +49,25 @@
 </tr>
 </table>
 
-<!--c{
-<a target='_blank' href='MorseCode.png'>Cheat Sheet</a>
-}-->
 <table border='0' cellpadding='3' cellspacing='3'>
+
+<!--c{
+<tr>
+<td>
+Tone (freq)
+</td>
+<td>
+<select id='UserFreq'>
+<option value='440'>440</option>
+<option value='500'>500</option>
+<option value='600'>600</option>
+<option value='700'>700</option>
+<option value='800'>800</option>
+</select>
+</td>
+</tr>
+}-->
+
 <tr>
 <td>
 <input type='radio' id='CheatSheet' name='LearnWhat'>
@@ -79,6 +94,17 @@
 </td>
 </tr>
 </table>
+
+<p>
+Tone (freq)
+<select id='UserFreq' onchange='ChangeFrequency();'>
+<option value='440'>440</option>
+<option value='500'>500</option>
+<option value='600'>600</option>
+<option value='700'>700</option>
+<option value='800'>800</option>
+</select>
+<p>
 
 <div id='Learn'>
 </div>

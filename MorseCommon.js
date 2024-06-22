@@ -30,7 +30,7 @@ var oscillator;
 var biquadFilter;
 var gainNode;
 var type = 'sine';
-var frequency = 440;
+var frequency = 600;
 var when = 1.0;
 
 function cmprec(a,b)
@@ -1593,7 +1593,6 @@ var Abbreviations = [
  [ 'CQ', 'Calling any station' ],
  [ 'CU', 'See you' ],
  [ 'CUL', 'See you later' ],
- [ 'CUM', 'Come' ],
  [ 'CW', 'Continuous-wave' ],
  [ 'DA  Day', 'Day' ],
  [ 'DE', 'From or This is' ],

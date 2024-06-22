@@ -53,6 +53,7 @@ function MakeWords ( SourceArray, SourceCount, WordCount )
 
 function startRX()
 {
+	frequency =  Number(document.getElementById('UserFreq').value);
 	document.getElementById('UserInput').value = '';;
 	document.getElementById('UserInput').focus();
 	document.getElementById('resultsRX').innerHTML = '';;

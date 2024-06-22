@@ -190,6 +190,8 @@ document.onkeydown = function(evt) {
 }
 
 function init_audio () {
+	frequency =  Number(document.getElementById('UserFreq').value);
+
     audioCtx = new (window.AudioContext || window.webkitAudioContext)();
     oscillator = audioCtx.createOscillator();
     biquadFilter = audioCtx.createBiquadFilter();
@@ -490,6 +492,11 @@ function LoadSentence ()
 
 	var elemWordList = document.getElementById("WordList");
 	elemWordList.innerHTML = '<p>' + Sentence + '<p>';
+}
+
+function ChangeFrequency ()
+{
+	init_audio();
 }
 
 function LoadSomething ( )

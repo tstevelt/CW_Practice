@@ -1,6 +1,7 @@
 
 
-WEBDIR=/var/www/vhosts/silverhammersoftware/html
+#WEBDIR=/var/www/vhosts/silverhammersoftware/html
+WEBDIR=/Users/tms/Sites/CW_Practice
 cp -pv MorseCommon.js $WEBDIR
 cp -pv MorseRX.html $WEBDIR
 cp -pv MorseRX.js $WEBDIR
